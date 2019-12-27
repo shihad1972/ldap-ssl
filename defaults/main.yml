@@ -1,0 +1,7 @@
+---
+# defaults file for ldap-ssl
+
+ldap_user: openldap
+ldap_group: "{{ ldap_user }}"
+slapd_keydir: /etc/ldap/ssl.key
+slapd_crtdir: /etc/ldap/ssl.crt

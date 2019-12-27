@@ -1,0 +1,9 @@
+---
+# handlers file for ldap-ssl
+
+- name: restart slapd
+  become: true
+  service:
+    name: slapd
+    state: restarted
+

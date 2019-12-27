@@ -1,0 +1,79 @@
+---
+
+- name: Create SSL key directory for slapd
+  become: true
+  file:
+    path: "{{ slapd_keydir }}"
+    group: "{{ ldap_user }}"
+    owner: "{{ ldap_group }}"
+    mode: "0700"
+    state: directory
+
+- name: Create SSL certificate directory for slapd
+  become: true
+  file:
+    path: "{{ slapd_crtdir }}"
+    group: "{{ ldap_user }}"
+    owner: "{{ ldap_group }}"
+    mode: "0755"
+    state: directory
+
+- name: Copy private key
+  become: true
+  copy:
+    backup: yes
+    src: "{{ ldap_host_name | default(ansible_fqdn) }}.pem"
+    dest: "{{ slapd_keydir }}/{{ ldap_host_name | default(ansible_fqdn) }}.pem"
+    mode: "0600"
+    owner: "{{ ldap_user }}"
+    group: "{{ ldap_group }}"
+  notify: restart slapd
+
+- name: Copy public key
+  become: true
+  copy:
+    backup: yes
+    src: "{{ ldap_host_name | default(ansible_fqdn) }}.crt"
+    dest: "{{ slapd_crtdir }}/{{ ldap_host_name | default(ansible_fqdn) }}.crt"
+    mode: "0644"
+    owner: "{{ ldap_user }}"
+    group: "{{ ldap_group }}"
+  notify: restart slapd
+
+- name: Configure slapd to start with SSL
+  become: true
+  lineinfile:
+    backup: yes
+    line: 'SLAPD_SERVICES="ldap:/// ldapi:/// ldaps:///"'
+    regexp: '^SLAPD_SERVICES'
+    dest: /etc/default/slapd
+  notify: restart slapd
+
+- meta: flush_handlers
+
+- name: Add LDAP Core TLS configuration
+  ignore_errors: true
+  become: true
+  ldap_attr:
+    dn: cn=config
+    state: exact
+    name: "{{ item.key }}"
+    values: "{{ item.value }}"
+  with_dict:
+    olcTLSCertificateFile: "/etc/ldap/ssl.crt/{{ ldap_host_name | default(ansible_fqdn) }}.crt"
+    olcTLSCertificateKeyFile: "/etc/ldap/ssl.key/{{ ldap_host_name | default(ansible_fqdn) }}.pem"
+    olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
+    olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
+
+- name: Add LDAP Core TLS configuration 2nd time
+  become: true
+  ldap_attr:
+    dn: cn=config
+    state: exact
+    name: "{{ item.key }}"
+    values: "{{ item.value }}"
+  with_dict:
+    olcTLSCertificateFile: "/etc/ldap/ssl.crt/{{ ldap_host_name | default(ansible_fqdn) }}.crt"
+    olcTLSCertificateKeyFile: "/etc/ldap/ssl.key/{{ ldap_host_name | default(ansible_fqdn) }}.pem"
+    olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
+    olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
