@@ -3,5 +3,8 @@
 
 ldap_user: openldap
 ldap_group: "{{ ldap_user }}"
+ldap_host_name: "{{ ansible_fqdn }}"
 slapd_keydir: /etc/ldap/ssl.key
 slapd_crtdir: /etc/ldap/ssl.crt
+ldap_cert_file: "{{ ldap_host_name }}.crt"
+ldap_key_file: "{{ ldap_host_name }}.pem"
