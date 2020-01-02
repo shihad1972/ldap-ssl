@@ -60,8 +60,8 @@
     name: "{{ item.key }}"
     values: "{{ item.value }}"
   with_dict:
-    olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ ldap_key_file }}"
-    olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ ldap_cert_file }}"
+    olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ ldap_cert_file }}"
+    olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ ldap_key_file }}"
     olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
     olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
 
@@ -73,7 +73,7 @@
     name: "{{ item.key }}"
     values: "{{ item.value }}"
   with_dict:
-    olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ ldap_key_file }}"
-    olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ ldap_cert_file }}"
+    olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ ldap_cert_file }}"
+    olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ ldap_key_file }}"
     olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
     olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
