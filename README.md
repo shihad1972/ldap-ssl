@@ -16,8 +16,8 @@ Role Variables
 --------------
 
   - ldap_host_name: Set to the CN of the SSL certificate; defaults to ansible_fqdn.
-  - ldap_cert_file: Filename of the SSL certificate
-  - ldap_key_file: Filename of the SSL private key.
+  - cert_file: Filename of the SSL certificate. Defaults to ldap_host_name.pem
+  - key_file: Filename of the SSL private key. Defaults to ldap_host_name.crt
 
 Dependencies
 ------------
@@ -32,8 +32,8 @@ Including an example of how to use your role (for instance, with variables passe
     - hosts: servers
       roles:
          - { role: ldap_ssl,
-             ldap_cert_file: my.host.com.crt,
-             ldap_key_file: my.host.com.key }
+             cert_file: my.host.com.crt,
+             key_file: my.host.com.key }
 
 License
 -------
