@@ -1,5 +1,11 @@
 ---
 
+- name: Install python ldap package
+  become: true
+  package:
+    name: "{{ python_ldap }}"
+    state: present
+
 - name: Create SSL key directory for slapd
   become: true
   file:
