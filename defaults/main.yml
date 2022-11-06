@@ -6,7 +6,5 @@ ldap_group: "{{ ldap_user }}"
 ldap_host_name: "{{ ansible_fqdn }}"
 slapd_keydir: /etc/ldap/ssl.key
 slapd_crtdir: /etc/ldap/ssl.crt
-cert_file: "{{ ldap_host_name }}.crt"
-key_file: "{{ ldap_host_name }}.pem"
 python_ldap: python-ldap
 python3_ldap: python3-ldap
