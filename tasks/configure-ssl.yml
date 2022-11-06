@@ -80,7 +80,7 @@
     olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
     olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
     olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
-  when: cert_file is defined && key_file is defined
+  when: cert_file is defined and key_file is defined
 
 - name: Add LDAP Core TLS configuration 2nd time
   become: true
@@ -94,4 +94,4 @@
     olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
     olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
     olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
-  when: cert_file  is defined && key_file is defined
+  when: cert_file is defined and key_file is defined
