@@ -34,6 +34,7 @@
     owner: "{{ ldap_user }}"
     group: "{{ ldap_group }}"
   notify: restart slapd
+  when: key_file is defined
 
 - name: Copy public key
   become: true
@@ -45,6 +46,7 @@
     owner: "{{ ldap_user }}"
     group: "{{ ldap_group }}"
   notify: restart slapd
+  when: cert_file is defined
 
 - name: Configure slapd to start with SSL
   become: true
@@ -70,6 +72,7 @@
     olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
     olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
     olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
+  when: cert_file && key_file is defined
 
 - name: Add LDAP Core TLS configuration 2nd time
   become: true
@@ -83,3 +86,4 @@
     olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
     olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
     olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
+  when: cert_file && key_file is defined
