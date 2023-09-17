@@ -73,8 +73,8 @@
   ldap_attr:
     dn: cn=config
     state: exact
-    name: "{{ item.key }}"
-    values: "{{ item.value }}"
+    attributes:
+      "{{ item.key }}": "{{ item.value }}"
   with_dict:
     olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ cert_file }}"
     olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
@@ -87,8 +87,8 @@
   ldap_attr:
     dn: cn=config
     state: exact
-    name: "{{ item.key }}"
-    values: "{{ item.value }}"
+    attributes:
+      "{{ item.key }}": "{{ item.value }}"
   with_dict:
     olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ cert_file }}"
     olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
