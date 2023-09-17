@@ -70,7 +70,7 @@
 - name: Add LDAP Core TLS configuration
   ignore_errors: true
   become: true
-  ldap_attr:
+  ldap_attrs:
     dn: cn=config
     state: exact
     attributes:
@@ -84,7 +84,7 @@
 
 - name: Add LDAP Core TLS configuration 2nd time
   become: true
-  ldap_attr:
+  ldap_attrs:
     dn: cn=config
     state: exact
     attributes:
