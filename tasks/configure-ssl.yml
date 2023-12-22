@@ -74,12 +74,10 @@
     dn: cn=config
     state: exact
     attributes:
-      "{{ item.key }}": "{{ item.value }}"
-  with_dict:
-    olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ cert_file }}"
-    olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
-    olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
-    olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
+      olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ cert_file }}"
+      olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
+      olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
+      olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
   when: cert_file is defined and key_file is defined
 
 - name: Add LDAP Core TLS configuration 2nd time
@@ -88,10 +86,8 @@
     dn: cn=config
     state: exact
     attributes:
-      "{{ item.key }}": "{{ item.value }}"
-  with_dict:
-    olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ cert_file }}"
-    olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
-    olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
-    olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
+      olcTLSCertificateFile: "{{ slapd_crtdir }}/{{ cert_file }}"
+      olcTLSCertificateKeyFile: "{{ slapd_keydir }}/{{ key_file }}"
+      olcTLSCRLCheck: "{{ ldap_cert_check | default('none') }}"
+      olcTLSVerifyClient: "{{ ldap_tls_check | default('never') }}"
   when: cert_file is defined and key_file is defined
